@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
@@ -46,5 +46,10 @@ class AuthController extends Controller
         JWTAuth::invalidate(JWTAuth::getToken());
  
         return response()->json(['message' => 'Logged out successfully.']);
+    }
+
+    public function hello ()
+    {
+        return "hello world";
     }
 }
