@@ -23,6 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     public function getJWTIdentifier()
@@ -33,6 +34,26 @@ class User extends Authenticatable
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'Admin';
+    }
+ 
+    public function isEmployee(): bool
+    {
+        return $this->role === 'Employee';
+    }
+ 
+    public function isClient(): bool
+    {
+        return $this->role === 'Client';
+    }
+ 
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'client_id');
     }
 
     /**
