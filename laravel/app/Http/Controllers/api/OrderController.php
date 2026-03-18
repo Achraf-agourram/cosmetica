@@ -54,4 +54,13 @@ class OrderController extends Controller
             'order'   => $order->load('orderItems.product'),
         ], 201);
     }
+
+    public function order_status($id)
+    {
+        $order = Order::where('client_id', auth()->id())->findOrFail($id);
+
+        return response()->json([
+            'order_status' => $order->status,
+        ]);
+    }
 }
