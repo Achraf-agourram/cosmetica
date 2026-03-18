@@ -19,6 +19,7 @@ return new class extends Migration
             $table->float('price');
             $table->integer('stock')->default(0);
             $table->string('image')->nullable();
+            $table->boolean('is_available')->default(true);
             $table->foreignId('category_id')->constrained('categories')->cascadeOnUpdate()->restrictOnDelete();
             $table->timestamps();
         });
