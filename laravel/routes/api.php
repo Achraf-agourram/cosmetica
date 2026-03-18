@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\EmployeeOrderController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\StatsController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/register', [AuthController::class, 'register']);
@@ -22,4 +23,8 @@ Route::middleware(['auth:api', 'employee'])->prefix('employee')->group(function 
     Route::get('/orders',                   [EmployeeOrderController::class, 'index']);
     Route::patch('/orders/{id}/prepare',    [EmployeeOrderController::class, 'prepare']);
     Route::patch('/orders/{id}/deliver',    [EmployeeOrderController::class, 'deliver']);
+});
+
+Route::middleware(['auth:api', 'admin'])->prefix('admin')->group(function () {
+    Route::get('/stats', [StatsController::class, 'index']);
 });
