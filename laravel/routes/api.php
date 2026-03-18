@@ -13,4 +13,6 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/products',  [ProductController::class, 'index']);
     Route::get('/product/{slug}',  [ProductController::class, 'product_details']);
     Route::post('/order',  [OrderController::class, 'store']);
+    Route::get('/orderStatus/{id}',  [OrderController::class, 'order_status']);
+    Route::patch('/orders/{id}/cancel', [OrderController::class, 'cancel']);
 });

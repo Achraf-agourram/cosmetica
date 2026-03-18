@@ -63,4 +63,25 @@ class OrderController extends Controller
             'order_status' => $order->status,
         ]);
     }
+
+    public function cancel($id)
+    {
+        $order = Order::where('client_id', auth()->id())->findOrFail($id);
+
+        if ($order->status !== 'pending') {
+            return response()->json([
+                'message' => 'Order cannot be cancelled. Only pending orders can be cancelled.',
+            ], 422);
+        }
+
+        DB::transaction(function () use ($order) {
+            foreach ($order->orderItems as $item) {
+                $item->product->increment('stock', $item->quantity);
+            }
+
+            $order->update(['status' => 'cancelled']);
+        });
+
+        return response()->json(['message' => 'Order cancelled successfully.']);
+    }
 }
