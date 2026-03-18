@@ -15,7 +15,6 @@ class StatsController extends Controller
             'top_products' => $this->topProducts(),
             'sales_by_category' => $this->salesByCategory(),
             'orders_by_status' => $this->ordersByStatus(),
-            'revenue_per_month' => $this->revenuePerMonth(),
         ]);
     }
 
@@ -77,21 +76,6 @@ class StatsController extends Controller
             ->select('status', DB::raw('COUNT(*) AS total'))
             ->groupBy('status')
             ->orderBy('status')
-            ->get();
-    }
-
-    private function revenuePerMonth()
-    {
-        return DB::table('order_items')
-            ->join('orders', 'orders.id', '=', 'order_items.order_id')
-            ->whereNotIn('orders.status', ['cancelled'])
-            ->whereYear('orders.created_at', now()->year)
-            ->select(
-                DB::raw('MONTH(orders.created_at) AS month'),
-                DB::raw('SUM(order_items.quantity * order_items.price) AS revenue')
-            )
-            ->groupByRaw('MONTH(orders.created_at)')
-            ->orderBy('month')
             ->get();
     }
 }
