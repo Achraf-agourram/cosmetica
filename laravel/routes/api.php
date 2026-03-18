@@ -18,7 +18,7 @@ Route::middleware('auth:api')->group(function () {
     Route::patch('/orders/{id}/cancel', [OrderController::class, 'cancel']);
 });
 
-Route::middleware(['auth:api', 'employee'])->prefix('employee')->group(function () {
+Route::middleware(['auth:api', 'employee'])->group(function () {
     Route::get('/orders',                   [EmployeeOrderController::class, 'index']);
     Route::patch('/orders/{id}/prepare',    [EmployeeOrderController::class, 'prepare']);
     Route::patch('/orders/{id}/deliver',    [EmployeeOrderController::class, 'deliver']);
