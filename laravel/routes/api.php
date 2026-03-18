@@ -10,4 +10,5 @@ Route::post('/login',    [AuthController::class, 'login']);
 Route::middleware('auth:api')->group(function () {
     Route::post('/logout',  [AuthController::class, 'logout']);
     Route::get('/products',  [ProductController::class, 'index']);
+    Route::get('/product/{slug}',  [ProductController::class, 'product_details']);
 });
