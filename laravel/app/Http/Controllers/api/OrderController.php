@@ -68,7 +68,7 @@ class OrderController extends Controller
     {
         $order = Order::where('client_id', auth()->id())->findOrFail($id);
 
-        if ($order->status !== 'pending') {
+        if ($order->status !== 'Pending') {
             return response()->json([
                 'message' => 'Order cannot be cancelled. Only pending orders can be cancelled.',
             ], 422);
@@ -79,7 +79,7 @@ class OrderController extends Controller
                 $item->product->increment('stock', $item->quantity);
             }
 
-            $order->update(['status' => 'cancelled']);
+            $order->update(['status' => 'Cancelled']);
         });
 
         return response()->json(['message' => 'Order cancelled successfully.']);
